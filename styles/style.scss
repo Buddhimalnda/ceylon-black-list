@@ -1,0 +1,232 @@
+#container {
+  font-size: 20px;
+  padding: 25px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 750px;
+  width: 1400px;
+  border-radius: 10px;
+  opacity: 150px;
+  border: 1px solid rgb(50, 50, 50);
+  box-shadow: 0 0 10px 3px black;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+body {
+  padding: 0;
+  margin: 0;
+  background: none;
+}
+
+.challenge-list {
+  .card {
+    display: block;
+    border-radius: 4px;
+    padding: 32px 24px;
+    margin: 12px;
+    width: 300px;
+    height: 300px;
+    position: absolute;
+
+    .content {
+      position: absolute;
+      float: left;
+      background: none;
+      width: 100%;
+      height: 100%;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+    }
+    &:active .content {
+      transform: rotateY(180deg);
+      transition: transform 0.5s;
+    }
+
+    .front,
+    .back {
+      position: absolute;
+      background: white;
+      color: #03446a;
+      text-align: center;
+      border-radius: 5px;
+      backface-visibility: hidden;
+      width: 300px;
+      height: 400px;
+    }
+
+    .back {
+      background: #2c73df;
+      color: white;
+      transform: rotateY(180deg);
+    }
+    .front {
+      &.back:after {
+        display: block;
+      }
+      &:hover .bottom {
+        display: block;
+      }
+      &:hover .top {
+        display: none;
+      }
+      .top {
+        background: #2c73df;
+        color: #fff;
+      }
+      .bottom {
+        display: none;
+        // display: none;
+      }
+
+      .slide {
+        width: 300px;
+
+        height: 200px;
+
+        transition: 0.5s;
+      }
+
+      .slide.slide1 {
+        position: relative;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        z-index: 1;
+
+        transition: 0.7s;
+
+        transform: translateY(100px);
+      }
+
+      &:hover .slide.slide1 {
+        transform: translateY(0px);
+      }
+
+      .slide.slide2 {
+        position: relative;
+
+        justify-content: center;
+
+        align-items: center;
+
+        padding: 20px;
+
+        box-sizing: border-box;
+
+        transition: 0.8s;
+
+        transform: translateY(-100px);
+
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      }
+
+      &:hover .slide.slide2 {
+        transform: translateY(0);
+      }
+
+      .slide.slide2::after {
+        content: "";
+
+        position: absolute;
+
+        width: 30px;
+
+        height: 4px;
+
+        bottom: 15px;
+
+        left: 50%;
+
+        left: 50%;
+
+        transform: translateX(-50%);
+      }
+    }
+    // .back {
+    //   display: none;
+    // }
+  }
+}
+
+.loading {
+  .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    background: transparent;
+    border: 3px solid #3c3c3c;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 150px;
+    font-family: sans-serif;
+    font-size: 20px;
+    color: #00c3ff;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    text-shadow: 0 0 10px #008cff;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+  .ring:before {
+    content: "";
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    width: 100%;
+    height: 100%;
+    border: 3px solid transparent;
+    border-top: 3px solid #00c3ff;
+    border-right: 3px solid #00c3ff;
+    border-radius: 50%;
+    animation: animateC 2s linear infinite;
+  }
+  span {
+    display: block;
+    position: absolute;
+    top: calc(50% - 2px);
+    left: 50%;
+    width: 50%;
+    height: 4px;
+    background: transparent;
+    transform-origin: left;
+    animation: animate 2s linear infinite;
+  }
+  span:before {
+    content: "";
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #00c3ff;
+    top: -6px;
+    right: -8px;
+    box-shadow: 0 0 20px #00c3ff;
+  }
+  @keyframes animateC {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  @keyframes animate {
+    0% {
+      transform: rotate(45deg);
+    }
+    100% {
+      transform: rotate(405deg);
+    }
+  }
+}
