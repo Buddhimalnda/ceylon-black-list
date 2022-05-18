@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 function UserDashboard() {
   return (
     <div className="container">
@@ -10,6 +12,7 @@ function UserDashboard() {
           {/* crew - view,*/}
           {/* user - uniq */}
           {/* car - add, view */}
+          <Link href="/user/carList">Car List</Link>
           {/* challenge - add, view */}
         </div>
       </div>

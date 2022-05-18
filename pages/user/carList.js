@@ -3,15 +3,17 @@ import { collection, onSnapshot, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { getFirebase } from "../../app/config.firebase";
+import { useSelector } from "react-redux";
 
 function CarList() {
   const { db, auth } = getFirebase();
   const [carList, setCarList] = useState([]);
   const carCol = collection(db, "cars");
+  const state = useSelector((state) => state);
 
   const carsQuery = query(
     carCol,
-    where("owner.value", "==", auth?.currentUser?.uid)
+    where("owner.value", "==", state?.auth?.user)
   );
   useEffect(() => {
     onSnapshot(carsQuery, (snap) => {
@@ -27,7 +29,7 @@ function CarList() {
     });
   }, [carsQuery]);
   return (
-    <div className="list flex">
+    <div className="list flex mx-40">
       {carList.map((d, i) => (
         <div
           className="card flex max-w-lg bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 mx-2"
