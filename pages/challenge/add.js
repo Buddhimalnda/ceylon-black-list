@@ -113,7 +113,7 @@ function AddChallenge() {
   }, []);
 
   return (
-    <div className="add-challenge mx-32">
+    <div className="add-challenge mx-40">
       <div className="ChallengeReq text-black">
         <form method="post">
           <h1 className="font-bold text-2xl text-center underline mb-4">
