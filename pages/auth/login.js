@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { getFirebase } from "../../app/config.firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { Login } from "../../features/auth/authSlice";
+import { checkCookies, getCookie, setCookies } from "cookies-next";
 
 function LoginUI() {
   const [username, setUsername] = useState("");
@@ -23,7 +24,7 @@ function LoginUI() {
         // Signed in
         const user = userCredential.user;
         dispatch(Login(user.uid));
-
+        setCookies("userId", user.uid);
         router.push("/");
         // ...
       })
@@ -35,7 +36,7 @@ function LoginUI() {
 
     e.preventDefault();
   };
-  if (user) router.push("/");
+  if (checkCookies("userId")) router.back();
 
   return (
     <div className="login justify-center place-items-center flex h-full">

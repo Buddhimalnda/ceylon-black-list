@@ -1,3 +1,4 @@
+import { removeCookies } from "cookies-next";
 import { signOut } from "firebase/auth";
 import { useRouter } from "next/router";
 import { getFirebase } from "../../app/config.firebase";
@@ -12,6 +13,7 @@ function Logout() {
     signOut(auth)
       .then(() => {
         // Sign-out successful.
+        removeCookies("userId");
         router.push("/").then(() => router.reload());
       })
       .catch((error) => {

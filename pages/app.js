@@ -19,16 +19,20 @@ import BottomBar from "../components/nav/bottom";
 import { XIcon } from "@heroicons/react/solid";
 import Loading from "../components/loading";
 import { useRouter } from "next/router";
+import { checkCookies } from "cookies-next";
 
 function App({ Component, pageProps }) {
+  const router = useRouter();
+
   const state = useSelector((state) => state);
   // if (state.auth.user) console.log("user");
   const dispatch = useDispatch();
-  console.log(state);
+  // console.log(state);
   const { db, auth } = getFirebase();
   const user = auth.currentUser?.uid;
 
   useEffect(() => {
+    if (!checkCookies("userId")) router.push("/auth/login");
     if (auth.currentUser?.uid) {
       const userCol = doc(db, "users", auth.currentUser?.uid);
       onSnapshot(userCol, (snap) => {
@@ -37,73 +41,73 @@ function App({ Component, pageProps }) {
         dispatch(Login(snap.id));
       });
     }
-  }, [db, auth.currentUser?.uid, state.auth.user, dispatch]);
+  }, [db, auth.currentUser?.uid, state.auth.user, dispatch, router]);
 
-  useEffect(() => {
-    if (state.auth.user) {
-      const { stream } = streamCrew();
-      stream((crews) => {
-        dispatch(
-          setCrew(
-            crews.map((d) => ({
-              id: d.id,
-              name: d.name,
-              logo: d.logo,
-              count: d.count,
-              color: d.code,
-            }))
-          )
-        );
-      });
-    }
-  }, [db, state.auth.user, dispatch]);
+  // useEffect(() => {
+  //   if (state.auth.user) {
+  //     const { stream } = streamCrew();
+  //     stream((crews) => {
+  //       dispatch(
+  //         setCrew(
+  //           crews.map((d) => ({
+  //             id: d.id,
+  //             name: d.name,
+  //             logo: d.logo,
+  //             count: d.count,
+  //             color: d.code,
+  //           }))
+  //         )
+  //       );
+  //     });
+  //   }
+  // }, [db, state.auth.user, dispatch]);
 
-  useEffect(() => {
-    if (state.auth.user) {
-      const { stream } = steamPoints();
-      stream((points) => {
-        dispatch(
-          setPoint(
-            points.map((d) => ({
-              id: d.id,
-              crew: d.crew,
-              value: d.value,
-              members: d.member,
-            }))
-          )
-        );
-      });
-    }
-  }, [db, state.auth.user, dispatch]);
+  // useEffect(() => {
+  //   if (state.auth.user) {
+  //     const { stream } = steamPoints();
+  //     stream((points) => {
+  //       dispatch(
+  //         setPoint(
+  //           points.map((d) => ({
+  //             id: d.id,
+  //             crew: d.crew,
+  //             value: d.value,
+  //             members: d.member,
+  //           }))
+  //         )
+  //       );
+  //     });
+  //   }
+  // }, [db, state.auth.user, dispatch]);
 
-  useEffect(() => {
-    if (state.auth.user) {
-      const { stream } = streamChallenge();
-      stream((challenges) => {
-        dispatch(
-          setChallenge(
-            challenges.map((d) => ({
-              id: d.id,
-              challengeCrew: {
-                lable: d.chllengeCrew.label,
-                value: d.chllengeCrew.value,
-              },
-              challengeName: {
-                lable: d.chllengerName.label,
-                value: d.chllengerName.value,
-              },
-              map: { lable: d.map.label, value: d.map.value },
-              mapType: { lable: d.mapType.label, value: d.mapType.value },
-              raceType: { lable: d.raceType.label, value: d.raceType.value },
-              time: d.time,
-              date: d.date,
-              price: d.priceValue,
-            }))
-          )
-        );
-      });
-    }
-  }, [db, state.auth.user, dispatch]);
+  // useEffect(() => {
+  //   if (state.auth.user) {
+  //     const { stream } = streamChallenge();
+  //     stream((challenges) => {
+  //       dispatch(
+  //         setChallenge(
+  //           challenges.map((d) => ({
+  //             id: d.id,
+  //             challengeCrew: {
+  //               lable: d.chllengeCrew.label,
+  //               value: d.chllengeCrew.value,
+  //             },
+  //             challengeName: {
+  //               lable: d.chllengerName.label,
+  //               value: d.chllengerName.value,
+  //             },
+  //             map: { lable: d.map.label, value: d.map.value },
+  //             mapType: { lable: d.mapType.label, value: d.mapType.value },
+  //             raceType: { lable: d.raceType.label, value: d.raceType.value },
+  //             time: d.time,
+  //             date: d.date,
+  //             price: d.priceValue,
+  //           }))
+  //         )
+  //       );
+  //     });
+  //   }
+  // }, [db, state.auth.user, dispatch]);
   const { isConfigured } = getFirebase();
 
   if (!isConfigured) {

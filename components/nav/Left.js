@@ -22,7 +22,7 @@ function Left() {
   const router = useRouter();
   // const [userID, setUserID] = useState();
   useEffect(() => {
-    if (auth?.currentUser?.uid) router.push("/auth/login");
+    // if (auth?.currentUser?.uid) router.push("/auth/login");
     let unsub = onAuth((u) => {
       setUser(u);
       const { stream } = streamUser();
